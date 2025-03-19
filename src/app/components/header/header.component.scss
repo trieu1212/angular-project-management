@@ -1,0 +1,17 @@
+.header-container {
+    display: flex;
+    justify-content:space-between;
+    padding: 0 10px 0 10px;
+    align-items: center;
+    background-color: aqua;
+}
+
+.header-item-1{
+    display: flex;
+    gap: 20px;
+}
+
+p:hover {
+    color: brown;
+    cursor: pointer;
+}

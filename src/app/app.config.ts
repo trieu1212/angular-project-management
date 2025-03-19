@@ -9,6 +9,9 @@ import { provideFirebaseApp } from '@angular/fire/app';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../environments/environment.development';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { getDatabase, provideDatabase } from '@angular/fire/database';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,9 +21,12 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       MatCardModule,
       MatSlideToggleModule,
-      MatFormFieldModule
+      MatFormFieldModule,
+      CommonModule,
+      ReactiveFormsModule
     ),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    provideAuth(() => getAuth())
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase())
   ]
 };

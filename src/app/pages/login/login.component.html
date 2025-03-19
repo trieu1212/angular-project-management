@@ -4,17 +4,18 @@
         <mat-card-content>
             <mat-form-field class="custom-input">
                 <mat-label>Email</mat-label>
-                <input matInput [(ngModel)]="email" type="email">
+                <input matInput [formControl]="loginForm.controls.email" type="email">
             </mat-form-field>
 
             <mat-form-field class="custom-input">
                 <mat-label>Password</mat-label>
-                <input matInput [(ngModel)]="password" type="password">
+                <input matInput [formControl]="loginForm.controls.password" type="password">
             </mat-form-field>
 
             <button mat-raised-button color="primary" class="login-button" (click)="login()">
                 Login
             </button>
+            <p class="register-redirect">Dont have account? <a href="/register">Register now!</a></p>
             <p class="error-message" *ngIf="errMessage">
                 {{errMessage}}
             </p>

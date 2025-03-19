@@ -1,1 +1,13 @@
-<p>header works!</p>
+<header class="header-container">
+    <div class="header-item-1">
+        <div (click)="tab('/home')">
+            <p>Projects</p>
+        </div>
+        <div (click)="tab('/profile')">
+            <p>Profile</p>
+        </div>
+    </div>
+    <div class="header-item-2">
+        <button mat-button (click)="logout()">Logout</button>
+    </div>
+</header>

@@ -1,18 +1,18 @@
-import { inject } from '@angular/core';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
-import { AuthService } from '../services/auth/auth.service';
 import { map, Observable } from 'rxjs';
+import { AuthService } from '../services/auth/auth.service';
+import { inject } from '@angular/core';
 
-export const authGuard: CanActivateFn = (route, state): Observable<boolean | UrlTree> => {
+export const guestGuard: CanActivateFn = (route, state): Observable<boolean | UrlTree> => {
   const authService = inject(AuthService)
   const router = inject(Router)
 
   return authService.getCurrentUser().pipe(
     map(user => {
-      if(user){
-        return true
+      if (user) {
+        return router.createUrlTree(['/home'])
       } else {
-        return router.createUrlTree(['/login'])
+        return true
       }
     })
   )
