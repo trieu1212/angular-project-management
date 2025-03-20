@@ -9,8 +9,8 @@
         </div>
     </div>
     <div class="body">
-        <mat-list role="list">
-            <mat-list-item *ngFor="let project of projects">
+        <mat-list role="list" class="project-list">
+            <mat-list-item *ngFor="let project of projects" class="project-item" (click)="clickProject(project.id)">
                 {{project.name}}
             </mat-list-item>
         </mat-list>

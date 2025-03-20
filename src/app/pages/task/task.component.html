@@ -1,1 +1,49 @@
-<p>task works!</p>
+<div class="task-container">
+  <div class="header">
+    <button mat-button (click)="getBack()">BACK</button>
+    <h2>Tasks of {{projectId}}</h2>
+    <button mat-button (click)="openDialog()">Add new task</button>
+  </div>
+    <!-- To Do Column -->
+    <mat-card class="task-column">
+      <mat-card-header class="status-header to-do">
+        <mat-card-title>To Do</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let task of tasks | filterTask:'To Do'">
+            {{ task.title }}
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  
+    <!-- In Progress Column -->
+    <mat-card class="task-column">
+      <mat-card-header class="status-header in-progress">
+        <mat-card-title>In Progress</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let task of tasks | filterTask:'In Progress'">
+            {{ task.title }}
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  
+    <!-- Done Column -->
+    <mat-card class="task-column">
+      <mat-card-header class="status-header done">
+        <mat-card-title>Done</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let task of tasks | filterTask:'Done'">
+            {{ task.title }}
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

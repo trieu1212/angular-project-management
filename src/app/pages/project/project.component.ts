@@ -6,6 +6,7 @@ import { IProject } from '../../core/models/interface/project.interface';
 import { NgFor } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddProjectFormComponent } from '../../components/add-project-form/add-project-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project',
@@ -19,7 +20,7 @@ import { AddProjectFormComponent } from '../../components/add-project-form/add-p
 })
 export class ProjectComponent implements OnInit {
   projects: IProject[] | null = null
-  constructor(private projectService: ProjectService, private dialog: MatDialog) {}
+  constructor(private projectService: ProjectService, private dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchProjects()  
@@ -28,7 +29,6 @@ export class ProjectComponent implements OnInit {
   fetchProjects() {
     this.projectService.getProject().subscribe(data => {
       this.projects = data
-      console.log(data)
     }) 
   }
 
@@ -45,5 +45,9 @@ export class ProjectComponent implements OnInit {
         })
       }
     })
+  }
+
+  clickProject(id:string) {
+    this.router.navigate([`project/${id}`])
   }
 }
