@@ -1,0 +1,31 @@
+<div class="container">
+  <h2 mat-dialog-title>Add New Project</h2>
+<div mat-dialog-content>
+  <form [formGroup]="projectForm" class="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Project Name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Member</mat-label>
+      <mat-select formControlName="memberIds">
+        <mat-option *ngFor="let user of users" [value]="user.id">
+          {{user.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="saveProject()" [disabled]="projectForm.invalid">
+    Save
+  </button>
+</div>
+</div>

@@ -1,1 +1,18 @@
-<p>project works!</p>
+<div class="container">
+    <div class="header">
+        <h2>PROJECTS</h2>
+        <div class="header-item-2">
+            <div></div>
+            <button mat-button (click)="openDialog()">
+                ADD NEW PROJECT
+            </button>
+        </div>
+    </div>
+    <div class="body">
+        <mat-list role="list">
+            <mat-list-item *ngFor="let project of projects">
+                {{project.name}}
+            </mat-list-item>
+        </mat-list>
+    </div>
+</div>

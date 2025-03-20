@@ -29,23 +29,36 @@ export class AuthService {
   }
   login(email: string, password: string): Observable<UserCredential> {
     return from(
-      (signInWithEmailAndPassword(this.auth, email, password))
+      (signInWithEmailAndPassword(this.auth, email, password)).then((userCredential) => {
+        localStorage.setItem('user', JSON.stringify(userCredential.user))
+        return userCredential
+      })
     )
   }
 
   logout(): Observable<void> {
     return from(
       signOut(this.auth).then(() => {
+        localStorage.removeItem('user')
         this.router.navigate(['/login'])
       })
     )
   }
 
   getCurrentUser(): Observable<User | null> {
-    return user(this.auth)
+    return new Observable((ob) => {
+      this.auth.onAuthStateChanged(user => {
+        if(user) {
+          localStorage.setItem('user', JSON.stringify(user))
+        } else {
+          localStorage.removeItem('user')
+        }
+        ob.next(user)
+      })
+    })
   }
 
   isLoggedIn(): boolean {
-    return this.auth.currentUser !== null
+    return localStorage.getItem('user') !== null;
   }
 }
