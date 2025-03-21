@@ -5,11 +5,13 @@ import { RegisterComponent } from './pages/register/register.component';
 import { guestGuard } from './core/guard/guest.guard';
 import { ProjectComponent } from './pages/project/project.component';
 import { TaskComponent } from './pages/task/task.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
     { path: 'register', component: RegisterComponent, canActivate: [guestGuard] },
     { path: 'home', component: ProjectComponent, canActivate: [authGuard] },
     { path: 'project/:id', component: TaskComponent, canActivate:[authGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate:[authGuard] },
     { path: '**', redirectTo: 'login'}
 ];

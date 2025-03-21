@@ -24,4 +24,12 @@ export class UserService {
       )
     )
   }
+
+  editProfile(id:string, user: Pick<IUser,"email" | "name">):Observable<IUser> {
+    return this.http.patch<IUser>(`${environment.API_URL}/users/${id}.json`, user)
+  }
+
+  getDetailUser(id:String):Observable<IUser> {
+    return this.http.get<IUser>(`${environment.API_URL}/users/${id}.json`)
+  }
 }

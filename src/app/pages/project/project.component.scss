@@ -26,6 +26,17 @@
             text-align: center;
             font-weight: bold;
             box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+
+            .delete-gr{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        .project-item:hover {
+            cursor: pointer;
+            background: orange;
         }
     }
 }

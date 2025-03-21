@@ -41,4 +41,8 @@ export class ProjectService {
       })
     )
   }
+
+  deleteProject(id:string) : Observable<{name:string}> {
+    return this.http.delete<{name:string}>(`${environment.API_URL}/projects/${id}.json`)
+  }
 }

@@ -11,7 +11,12 @@
     <div class="body">
         <mat-list role="list" class="project-list">
             <mat-list-item *ngFor="let project of projects" class="project-item" (click)="clickProject(project.id)">
-                {{project.name}}
+                <div class="delete-gr">
+                    <span>{{project.name}}</span>
+                    <button mat-icon-button color="warn" (click)="deleteProject($event,project.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
             </mat-list-item>
         </mat-list>
     </div>

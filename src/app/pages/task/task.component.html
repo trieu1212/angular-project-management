@@ -1,7 +1,7 @@
 <div class="task-container">
   <div class="header">
     <button mat-button (click)="getBack()">BACK</button>
-    <h2>Tasks of {{project.name}}</h2>
+    <h2>Project {{project.name}}</h2>
     <button mat-button (click)="openAddDialog()">Add new task</button>
   </div>
     <!-- To Do Column -->
@@ -27,17 +27,21 @@
             <th mat-header-cell *matHeaderCellDef> Status </th>
             <td mat-cell *matCellDef="let task" (click)="openEditDialog(task.id)" class="task-item"> {{ task.status }} </td>
           </ng-container>
-    
-          <ng-container matColumnDef="assignee">
-            <th mat-header-cell *matHeaderCellDef> Assignee </th>
-            <td mat-cell *matCellDef="let task" (click)="openEditDialog(task.id)" class="task-item"> {{ task.assignee }} </td>
-          </ng-container>
 
           <ng-container matColumnDef="createdAt">
             <th mat-header-cell *matHeaderCellDef> Created At </th>
             <td mat-cell *matCellDef="let task" (click)="openEditDialog(task.id)" class="task-item"> {{ formatDate(task.createdAt) }} </td>
           </ng-container>
-    
+          
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let task"> 
+              <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+      
           <!-- Header Row -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <!-- Data Row -->
@@ -69,17 +73,21 @@
             <th mat-header-cell *matHeaderCellDef> Status </th>
             <td mat-cell *matCellDef="let task" (click)="openEditDialog(task.id)" class="task-item"> {{ task.status }} </td>
           </ng-container>
-    
-          <ng-container matColumnDef="assignee">
-            <th mat-header-cell *matHeaderCellDef> Assignee </th>
-            <td mat-cell *matCellDef="let task" (click)="openEditDialog(task.id)" class="task-item"> {{ task.assignee }} </td>
-          </ng-container>
 
           <ng-container matColumnDef="createdAt">
             <th mat-header-cell *matHeaderCellDef> Created At </th>
             <td mat-cell *matCellDef="let task" (click)="openEditDialog(task.id)" class="task-item"> {{ formatDate(task.createdAt) }} </td>
           </ng-container>
-    
+          
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let task"> 
+              <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+      
           <!-- Header Row -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <!-- Data Row -->
@@ -111,17 +119,21 @@
             <th mat-header-cell *matHeaderCellDef> Status </th>
             <td mat-cell *matCellDef="let task" (click)="openEditDialog(task.id)" class="task-item"> {{ task.status }} </td>
           </ng-container>
-    
-          <ng-container matColumnDef="assignee">
-            <th mat-header-cell *matHeaderCellDef> Assignee </th>
-            <td mat-cell *matCellDef="let task" (click)="openEditDialog(task.id)" class="task-item"> {{ task.assignee }} </td>
-          </ng-container>
 
           <ng-container matColumnDef="createdAt">
             <th mat-header-cell *matHeaderCellDef> Created At </th>
             <td mat-cell *matCellDef="let task" (click)="openEditDialog(task.id)" class="task-item"> {{ formatDate(task.createdAt) }} </td>
           </ng-container>
-    
+          
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let task"> 
+              <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+      
           <!-- Header Row -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <!-- Data Row -->

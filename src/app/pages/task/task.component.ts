@@ -2,6 +2,7 @@ import { CommonModule, Location, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {MatListModule} from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -25,7 +26,8 @@ import { EditTaskFormComponent } from '../../components/edit-task-form/edit-task
     CommonModule,
     FilterTaskPipe,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatIconModule
   ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.scss'
@@ -41,8 +43,8 @@ export class TaskComponent implements OnInit {
     memberIds: [],
     createdAt: new Date()
   }
-  userId: string = ''
-  displayedColumns: string[] = ['title', 'description', 'status', 'assignee', 'createdAt'];
+  user: any = localStorage.getItem('user') 
+  displayedColumns: string[] = ['title', 'description', 'status', 'createdAt', 'actions'];
   formatDate = formatDate
 
   constructor(
@@ -61,8 +63,6 @@ export class TaskComponent implements OnInit {
         this.getDetailProject(this.projectId)
       }
     })
-    const user: any = localStorage.getItem('user') 
-    this.userId = user.uid  
   } 
 
   getBack() {
@@ -72,13 +72,19 @@ export class TaskComponent implements OnInit {
   getTaskByProjectId(projectId: string) {
     this.taskService.getTasksByProjectId(projectId).subscribe(data => {
       this.tasks = data
-      console.log(this.tasks)
     })
   }
 
   getDetailProject(id: string) {
     this.projectService.getDetailProject(id).subscribe(data => {
       this.project = data
+    })
+  }
+
+  deleteTask(id:string) {
+    this.taskService.deleteTask(id).subscribe(data => {
+      alert('Delete task successfully!')
+      this.getTaskByProjectId(this.projectId)
     })
   }
 
@@ -95,7 +101,7 @@ export class TaskComponent implements OnInit {
             description: result.description || '',
             status: result.status || 'To Do',
             projectId: this.projectId,
-            assigneeId: this.userId || "",
+            assignee: this.user || "",
             createdAt: new Date()
           }
           this.taskService.addTask(task).subscribe(res => {

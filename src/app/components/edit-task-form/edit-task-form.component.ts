@@ -5,7 +5,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
+import {MatButtonModule, MatIconButton} from '@angular/material/button';
 import { TaskService } from '../../core/services/task/task.service';
 import { ITask } from '../../core/models/interface/task.interface';
 
@@ -31,7 +31,7 @@ export class EditTaskFormComponent implements OnInit {
     description: '',
     status: "To Do",
     projectId:'',
-    assigneeId: '',
+    assignee: '',
     createdAt: new Date()
   }
   constructor(
