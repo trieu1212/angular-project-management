@@ -28,4 +28,17 @@ export class ProjectService {
   saveProject(project: Omit<IProject, 'id'>):Observable<{name:string}> {
     return this.http.post<{name: string}>(`${environment.API_URL}/projects.json`, project)
   }
+
+  getDetailProject(id:string): Observable<IProject> {
+    return this.http.get<{[key: string]: IProject}>(`${environment.API_URL}/projects.json`).pipe(
+      map(response => {
+        const prjKey = Object.keys(response).find(k => k == id)
+        const result : IProject = {
+          ...response[prjKey || id],
+          id:prjKey || id,
+        }
+        return result
+      })
+    )
+  }
 }

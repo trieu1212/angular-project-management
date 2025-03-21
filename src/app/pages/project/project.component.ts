@@ -20,10 +20,13 @@ import { Router } from '@angular/router';
 })
 export class ProjectComponent implements OnInit {
   projects: IProject[] | null = null
+  userId: string = ''
   constructor(private projectService: ProjectService, private dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchProjects()  
+    const user: any = localStorage.getItem('user') 
+    this.userId = user.uid  
   }
 
   fetchProjects() {
@@ -40,7 +43,14 @@ export class ProjectComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.projectService.saveProject(result).subscribe((res) => {
+        const prj:Omit<IProject,"id"> = {
+          name: result.name,
+          description:result.description || '',
+          memberIds: result.memberIds,
+          ownerId: this.userId || '',
+          createdAt: new Date()
+        }
+        this.projectService.saveProject(prj).subscribe((res) => {
           this.fetchProjects()
         })
       }

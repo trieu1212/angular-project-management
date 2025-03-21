@@ -22,4 +22,25 @@ export class TaskService {
       })
     )
   }
+
+  addTask(task: Omit<ITask,'id'>):Observable<{name:string}> {
+    return this.http.post<{name:string}>(`${environment.API_URL}/tasks.json`,task)
+  }
+
+  getDetailTask(id:string): Observable<ITask> {
+    return this.http.get<{[key:string]: ITask}>(`${environment.API_URL}/tasks.json`).pipe(
+      map(response => {
+        const taskKey = Object.keys(response).find(k => k==id)
+        const result: ITask = {
+          ...response[taskKey || id],
+          id: taskKey || '',
+        }
+        return result
+      })
+    )
+  }
+
+  updateTask(id: string, task: Pick<ITask, 'title' | 'description' | 'status'>): Observable<ITask> {
+    return this.http.patch<ITask>(`${environment.API_URL}/tasks/${id}.json`,task)
+  }
 }

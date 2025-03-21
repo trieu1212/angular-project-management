@@ -4,4 +4,5 @@ export interface IProject {
     description: string
     ownerId: string
     memberIds: string[]
+    createdAt: Date
 }

@@ -4,6 +4,7 @@ import {MatListModule} from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { TaskService } from '../../core/services/task/task.service';
 import { ITask } from '../../core/models/interface/task.interface';
@@ -11,7 +12,10 @@ import { ActivatedRoute } from '@angular/router';
 import {FilterTaskPipe} from '../../pipes/filter-task.pipe'
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskFormComponent } from '../../components/add-task-form/add-task-form.component';
-
+import { ProjectService } from '../../core/services/project/project.service';
+import { IProject } from '../../core/models/interface/project.interface';
+import {formatDate} from '../../core/utils/fomatDate'
+import { EditTaskFormComponent } from '../../components/edit-task-form/edit-task-form.component';
 @Component({
   selector: 'app-task',
   imports: [
@@ -20,16 +24,29 @@ import { AddTaskFormComponent } from '../../components/add-task-form/add-task-fo
     MatCardModule,
     CommonModule,
     FilterTaskPipe,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule
   ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.scss'
 })
 export class TaskComponent implements OnInit {
   tasks: ITask[] | null = null
-  projectId: string = ''  
+  projectId: string = '' 
+  project: IProject = {
+    id: '',
+    name: "",
+    description: "",
+    ownerId: "",
+    memberIds: [],
+    createdAt: new Date()
+  }
+  userId: string = ''
+  displayedColumns: string[] = ['title', 'description', 'status', 'assignee', 'createdAt'];
+  formatDate = formatDate
 
   constructor(
+    private projectService: ProjectService,
     private taskService: TaskService,
     private route: ActivatedRoute,
     private location: Location,
@@ -41,8 +58,11 @@ export class TaskComponent implements OnInit {
       this.projectId = params.get('id') || ""
       if(this.projectId) {
         this.getTaskByProjectId(this.projectId)
+        this.getDetailProject(this.projectId)
       }
-    })   
+    })
+    const user: any = localStorage.getItem('user') 
+    this.userId = user.uid  
   } 
 
   getBack() {
@@ -52,10 +72,17 @@ export class TaskComponent implements OnInit {
   getTaskByProjectId(projectId: string) {
     this.taskService.getTasksByProjectId(projectId).subscribe(data => {
       this.tasks = data
+      console.log(this.tasks)
     })
   }
 
-  openDialog() {
+  getDetailProject(id: string) {
+    this.projectService.getDetailProject(id).subscribe(data => {
+      this.project = data
+    })
+  }
+
+  openAddDialog() {
       const dialogRef = this.dialog.open(AddTaskFormComponent, {
         width: '600px',
         height: '400px'
@@ -63,7 +90,40 @@ export class TaskComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          console.log('ok')
+          const task: Omit<ITask,'id'> = {
+            title: result.title,
+            description: result.description || '',
+            status: result.status || 'To Do',
+            projectId: this.projectId,
+            assigneeId: this.userId || "",
+            createdAt: new Date()
+          }
+          this.taskService.addTask(task).subscribe(res => {
+            alert('Add task successfully!')
+            this.getTaskByProjectId(this.projectId)
+          })
+        }
+      })
+    }
+  
+    openEditDialog(id:string) {
+      const dialogRef = this.dialog.open(EditTaskFormComponent, {
+        width: '600px',
+        height: '400px',
+        data: {id}
+      })
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          const task: Pick<ITask, "title" | "description" | "status"> = {
+            title: result.title,
+            description: result.description,
+            status: result.status
+          }
+          this.taskService.updateTask(id, task).subscribe(() => {
+            alert('Edit task successfully!')
+            this.getTaskByProjectId(this.projectId)
+          })
         }
       })
     }

@@ -11,4 +11,25 @@
         align-items: center;
     }
 
+    .task-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+
+        .to-do {
+            color: red;
+        }
+        .in-progress{
+            color:orange
+        }
+        .done{
+            color: green;
+        }
+
+        .task-item:hover {
+            cursor: pointer;
+        }
+    }
 }

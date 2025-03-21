@@ -9,7 +9,7 @@ export class FilterTaskPipe implements PipeTransform {
 
   transform(tasks: ITask[] | null, status: string): ITask[] {
     if(!tasks) return []
-    return tasks.filter(tasks => tasks.status == status)
+    return tasks.filter(task => task.status == status)
   }
 
 }
